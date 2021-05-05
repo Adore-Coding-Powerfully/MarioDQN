@@ -1,8 +1,8 @@
 # MarioDQN
-##Goal of the project:
+## Goal of the project:
 1) Creating a neural net that uses Reinforcement Learning Algorithm to learn how to play Mario game
 
-##Contributors:
+## Contributors:
 1) Arseny Khlytchiev
 2) Egor Yukhnevich
 3) Vladislav Artyukhov
