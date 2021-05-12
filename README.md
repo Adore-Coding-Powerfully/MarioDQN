@@ -1,4 +1,8 @@
 # MarioDQN
+
+Read this in other languages: [English](./README.md), [Русский](./README.ru.md)
+
+
 ## Goal of the project:
 1) Creating a neural net that uses Reinforcement Learning Algorithm to learn how to play Mario game
 
