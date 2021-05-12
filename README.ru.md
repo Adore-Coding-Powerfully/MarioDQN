@@ -75,5 +75,6 @@ def act(state):
 5)  &gamma; – коэффициент дисконтирования. Он необходим для того, чтобы уменьшать "значимость" награды в последующих моментах времени
 6)  &alpha; – коэффициент обучения. Он определяет насколько сильно мы изменим текущее значение Q-функции
 
-![Q_{target}(s_t, a_t) = r_t(s_t, a_t) + \gamma \max_a Q(s_{t + 1}, a)](./assets/Q_target_formula.svg)
-![Q(s_t, a_t) := Q(s_t, a_t) + \alpha (Q_{target}(s_t, a_t) - Q(s_t, a_t))](./assets/update_Q_formula.svg)
+![Q_{target}(s_t, a_t) = r_t(s_t, a_t) + \gamma \max_a Q(s_{t + 1}, a)](./assets/Q_target.png)
+
+![Q(s_t, a_t) := Q(s_t, a_t) + \alpha (Q_{target}(s_t, a_t) - Q(s_t, a_t))](./assets/Q_updating.png)
