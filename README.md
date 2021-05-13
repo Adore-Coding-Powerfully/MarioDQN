@@ -31,3 +31,37 @@ Approximately no one of us have ever struggled with such ML problems before. And
 It may be said we already learned the ropes of the topic as we went to the camp and we were ready to start our prolific way on this steep learning curve. For sure we didn’t know all the tricks and lanes of this enormous topic. Anyway our tutor (Dmitri Ivanov) had a huge pile of exercises for us to receive, and due to them we managed to learn these nuances and options of Python by the way. It was quite hard to make a really convincing project in all of it’s alacrity considering the fact that for all of our teammates Python was a brand new programming language because our main one was C++ (and it remains to be our most adorable one), but anyway we strived as much as we could.
 
 We have got a huge chunk of experience in teamwork and in ML basics in the camp, on the basement of which  we now can create our own ML projects. In addition to this we have met a big number of interesting people who have their own goals and desires in IT.
+
+## Results
+1)We managed to teach the agent to play mario quite well and now he can pass a worthwhile part of the level, that may be without any doubts called as a prosperous result.
+2)Everyone in our team received invaluable experience in team work.
+3)We have learned the ropes and ML basics, according to which we’re going to work on similar projects.
+
+
+
+### Best Mario agent's play:
+
+![Best Mario agent's play](./assets/videos/best_gameplay_mario.gif)
+
+### Agent plays in simpler games:
+
+#### Cartpol game
+
+Initial stage of learning:
+
+![Video of a not trained agent Cartpol](./assets/videos/cartpol_untrained.gif)
+
+Final stage of learning:
+
+![Video of a trained agent Cartpol](./assets/videos/cartpol_trained.gif)
+
+
+#### Lunar Lander game:
+
+Initial stage of learning:
+
+![Video of a not trained agent Lunar Lander](./assets/videos/lander_untrained.gif)
+
+Final stage of learning:
+
+![Video of a trained agent Lunar Lander](./assets/videos/lander_trained.gif)
