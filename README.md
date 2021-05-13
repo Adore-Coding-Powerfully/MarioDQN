@@ -33,9 +33,11 @@ It may be said we already learned the ropes of the topic as we went to the camp 
 We have got a huge chunk of experience in teamwork and in ML basics in the camp, on the basement of which  we now can create our own ML projects. In addition to this we have met a big number of interesting people who have their own goals and desires in IT.
 
 ## Results
-1)We managed to teach the agent to play mario quite well and now he can pass a worthwhile part of the level, that may be without any doubts called as a prosperous result.
-2)Everyone in our team received invaluable experience in team work.
-3)We have learned the ropes and ML basics, according to which we’re going to work on similar projects.
+1)  We managed to teach the agent to play mario quite well and now he can pass a worthwhile part of the level, that may be without any doubts called as a prosperous result.
+
+2)  Everyone in our team received invaluable experience in team work.
+
+3)  We have learned the ropes and ML basics, according to which we’re going to work on similar projects.
 
 
 
@@ -43,7 +45,7 @@ We have got a huge chunk of experience in teamwork and in ML basics in the camp,
 
 ![Best Mario agent's play](./assets/videos/best_gameplay_mario.gif)
 
-### Agent plays in simpler games:
+### Agent plays simpler games:
 
 #### Cartpol game
 
@@ -65,3 +67,103 @@ Initial stage of learning:
 Final stage of learning:
 
 ![Video of a trained agent Lunar Lander](./assets/videos/lander_trained.gif)
+
+
+
+
+## Reinforcement Learning Algorithm:
+
+![Operation of the Reinforcement Learning Algorithm](./assets/RL.png)
+
+1)	The agent performs an action in the environment depending on the current state and receives a reward 
+2)	The environment goes to the next state
+3)	The agent takes action again and receives a reward
+4)	Actions are repeated until the agent enters a terminal state (for example, death in the game)
+
+The main goal of the agent is to maximize the amount of rewards for the entire episode. Episode is the period from the start of the game to the terminal state.
+
+A feature of reinforcement learning is the lack of data for training, so the agent trains on the data that it receives by interacting with the environment.
+
+
+## What is Q-learning?
+
+Q-training is a model that trains some utility function – Q-function. This function, based on the current state and specific action, calculates the predicted reward for the entire episode – Q value.
+
+The agent performs actions based on its policy. Policy is the rules that determine what next action the agent will perform.
+The policy of our agent is called *Epsilon-Greedy*: with some probability the agent performs a random action, otherwise it performs an action that corresponds to the maximum value of the Q-function.
+
+```
+# implementation of Epsilon-Greedy Policy:
+
+def act(state):
+    rand_float = random.random() # returns random float in range: [0, 1)
+    if rand_float <= EPS:
+        action = random_action()
+    else:
+        action = model.get_action(state) # returns action that brings max Q-value
+
+    return action
+
+```
+In the classical implementation of the Q-learning algorithm, a table is formed from all possible states of the environment and all possible actions. The task is to calculate the Q-values ​​for each pair (state, action).
+
+![Utility function table of the form: (state, action)](./assets/Q-learning_table.png)
+
+
+
+
+### Learning process:
+
+We add to the considered value of the Q-function the difference between the optimal value and the current value of this function.
+
+1)  *Q(s, a)* – Q-function value for a state and an action
+2)  *Q*<sub>*target*</sub> *(s, a)* – according to our assumption, this is the optimal value of the Q-function, to which we are trying to bring closer the current value of the Q-function
+3)  *s<sub>t</sub>, a<sub>t</sub>* – the state of the environment and the selected action at a point in time $t$
+4)  *r<sub>t</sub> (s<sub>t</sub>, a<sub>t</sub>)* – reward for the current state of the environment and the taken action
+5)  &gamma; – discount coefficient. It is necessary in order to diminish the "significance" of the reward at subsequent points in time
+6)  &alpha; – learning rate. It determines how much we change the current value of the Q-function
+
+![Q_{target}(s_t, a_t) = r_t(s_t, a_t) + \gamma \max_a Q(s_{t + 1}, a)](./assets/Q_target.svg)
+
+![Q(s_t, a_t) := Q(s_t, a_t) + \alpha (Q_{target}(s_t, a_t) - Q(s_t, a_t))](./assets/Q_updating.svg)
+
+
+
+## Deep Q-learning – DQN:
+
+The environment often has too many states and actions, so it is impossible to create the table explicitly. To solve this problem, neural networks are used in order not to store utility values, but to predict them. The current state is received at the input of the neural network, and at the output it gives a predicted reward for all actions.
+
+To change the Q-value, we update the neural network weights so that more correct values ​​are predicted. This is done, as usual, with a gradient descent.
+
+
+![Structure DQN](./assets/dqn.png)
+
+
+
+## Experience Replay Buffer:
+
+As mentioned earlier, a feature of this learning algorithm is the lack of data for training the model, so the agent needs to accumulate game experience and perform training based on it. While interacting with the environment, the agent accumulates transitions into a buffer. These transitions include: the current state, the action performed, the reward for the action, the next state after the action, and a variable that determines whether the current state is terminal:
+
+```
+transition = (state, action, next_state, reward, done)
+replay_buffer.append(transition)
+```
+
+The advantages of this approach:
+1)	Experience can be reused (the agent does not need to perform a lot of interactions with the environment)
+2)	We do not forget previous experience, as we do not focus only on the actions that are being performed at the moment
+
+
+
+
+## Target network:
+
+In order for the entire learning algorithm to work, it is necessary to have a second neural network `target model`, which determines the optimal value of the Q-function (Q target). This model is a copy of the `online model` that interacts with the environment.
+
+The only difference is that the `target model` weights are updated a little less often, we have about every 500th episode.
+
+This is necessary for the correct training of the model. Otherwise, if the `online model` calculates the Q target function and the Q-function independently, then when the network weights change, the following values ​​of both functions will change approximately the same. Therefore, the difference between the values remains the same as well. This leads to the state where current Q-values will never be brought closer to the optimum value.
+
+
+There are 2 methods for updating target model weights: hard update, soft update. The first one copies the `online model` into the `target model` for each `n`-th training iteration, in the second method the `target model` weights are also recalculated during training, but more slowly, as the weighted average of the weights of the two networks: *Q*<sub>*target*</sub> := *Q*<sub>*target*</sub> + &alpha; (*Q*<sub>*agent*</sub> - *Q*<sub>*target*</sub>)
+
